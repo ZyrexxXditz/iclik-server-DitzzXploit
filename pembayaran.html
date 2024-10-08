@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Pembayaran</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .payment-form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+        .form-group input[type="text"], 
+        .form-group input[type="number"],
+        .form-group input[type="email"],
+        .form-group input[type="file"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        .form-group input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .payment-options {
+            display: flex;
+            justify-content: space-between;
+        }
+        .payment-option {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 30%;
+            text-align: center;
+            cursor: pointer;
+        }
+        .payment-option:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Metode Pembayaran</h1>
+        <form class="payment-form" id="paymentForm" onsubmit="handlePayment(event)">
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="telegram">Username Telegram</label>
+                <input type="text" id="telegram" name="telegram" required>
+            </div>
+            <div class="form-group">
+                <label>Pilih Metode Pembayaran</label><br>
+                <div class="payment-options">
+                    <div class="payment-option" onclick="indexpay.html">Dana</div>
+                    <div class="payment-option" onclick="indexpay.html">Gopay>
+                    <div class="payment-option" onclick="indexpay.html">QRIS</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Lu Transfer Ke Mana Ketik Di Bawah</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="produk">Daftar Produk</label>
+                <select id="produk" name="produk">
+                    <option value="">Pilih Produk</option>
+                    <option value="sc ditzzxkontol v2">Script Bot wa/WhatsApp</option>
+                    <option value="script bot tele">Sc Bot telegram Rat</option>
+                    <option value="pin apk">Panel Run Bot</option>
+                    <option value="BASE PIN ALL APP">BASE PIN ALL APP</option>
+                    <!-- Tambahkan opsi produk lainnya di sini -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="photo">Kirim Bukti Transfer</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Kirim Bukti">
+            </div>
+            <a href="wa.me/6283842671582">setelah Kirim Bukti ke bot telegram | Silahkan Kirim bukti ke WhatsApp</a>
+            <br>
+            <div style="text-align: center; margin-top: 20px;">
+    <p>Untuk informasi lebih lanjut atau bantuan, silakan hubungi kami melalui Telegram <strong>@DitzzXkontol</strong>. <a href="#">Cara order?</a></p>
+</div>
+        </form>
+    </div>
+
+    <script>
+        function openInNewTab(url) {
+            var win = window.open(url, '_blank');
+            win.focus();
+        }
+
+        function handlePayment(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            // Get form data
+            const formData = new FormData(document.getElementById('paymentForm'));
+            
+            // Get photo
+            const photo = formData.get('photo');
+            
+            // Get other form fields
+            const name = formData.get('name');
+            const telegram = formData.get('telegram');
+            const description = formData.get('description');
+            const produk = formData.get('produk');
+
+            // Prepare message
+            let message = "ADA ORDERAN BG @DitzzXploitDev\n\n";
+            message += "NAMA: " + name + "\n";
+            message += "USR BUYER: " + telegram + "\n";
+            message += "DESKRIPSI: " + description + "\n";
+            message += "PRODUK: " + produk;
+            
+            // Send message to Telegram bot
+            const botToken = 'TOKEN_BOT'; // Replace with your bot token
+            const chatId = 'ID_USER'; // Replace with your chat ID
+            const url = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+            const request = new XMLHttpRequest();
+            request.open('POST', url);
+            const requestData = new FormData();
+            requestData.append('chat_id', chatId);
+            requestData.append('photo', photo);
+            requestData.append('caption', message);
+            
+            request.onreadystatechange = function() {
+                if (request.readyState === XMLHttpRequest.DONE) {
+                    if (request.status === 200) {
+                        alert('Gambar berhasil dikirim ke bot Telegram.');
+                    } else {
+                        alert('Gagal mengirim gambar ke bot Telegram.');
+                    }
+                }
+            };
+            
+            request.send(requestData);
+        }
+    </script>
+</body>
+</html>
